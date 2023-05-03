@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Blogs from "../Blogs/Blogs";
-// import Recipes from "../Chef/ChefRecipes";
 import ChefRecipes from "../Chef/ChefRecipes";
 import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
@@ -15,7 +14,7 @@ const routes = createBrowserRouter([
     path: "/",
     element: (
       <>
-        <Navbar /> {/* include the navbar here */}
+        <Navbar />
         <Main />
         <Footer />
       </>
