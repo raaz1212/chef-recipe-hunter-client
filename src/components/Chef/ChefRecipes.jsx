@@ -10,7 +10,9 @@ const ChefRecipes = () => {
   const chef = useLoaderData();
 
   const [favorites, setFavorites] = useState(
-    new Array(chef.recipes.length).fill(false)
+    chef.recipes && Array.isArray(chef.recipes)
+      ? new Array(chef.recipes.length).fill(false)
+      : []
   );
 
   const handleFavoriteClick = (index) => {
