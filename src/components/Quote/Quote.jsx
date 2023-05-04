@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { generate_quote } from "./quote-generator";
 
+//extra section for requirment-2
+
 function QuoteCard() {
   const [quote, setQuote] = useState(generate_quote());
 

@@ -1,6 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 
+//extra section for requirment-1
+
 const FaqSection = () => {
   return (
     <div className="bg-blue-400 p-2">

@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Register/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const routes = createBrowserRouter([
         <Footer />
       </>
     ),
+    errorElement: <NotFound />, //error handler
     children: [
       {
         path: "/",
@@ -26,8 +28,12 @@ const routes = createBrowserRouter([
         loader: () => fetch("http://localhost:5000/chefs"),
       },
       {
-        path: "/:id",
-        element: <ChefRecipes />,
+        path: "/chef/:id",
+        element: (
+          <PrivateRoute>
+            <ChefRecipes />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/chefs/${params.id}`),
       },
@@ -42,11 +48,6 @@ const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
-      },
-
-      {
-        path: "*",
-        element: <NotFound />,
       },
     ],
   },

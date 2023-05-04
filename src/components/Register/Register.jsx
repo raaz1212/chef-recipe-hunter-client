@@ -1,18 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  updateProfile,
-} from "firebase/auth";
-import app from "../firebase/firebase.config";
+import React, { useContext, useState } from "react";
+import { updateProfile } from "firebase/auth";
 import { Link } from "react-router-dom";
-
-const auth = getAuth(app);
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { createUser, logOut } = useContext(AuthContext);
 
   const handleSubmit = (event) => {
     // 1. prevent page refresh
@@ -33,15 +28,16 @@ const Register = () => {
     }
 
     // 3. create user in fb
-    createUserWithEmailAndPassword(auth, email, password)
+    createUser(email, password)
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
         setError("");
         event.target.reset();
         setSuccess("User has been created successfully. Please login again.");
-        // sendVerificationEmail(result.user);
         updateUserData(result.user, name, photoURL);
+        // signOut(result.user); // Logout the user
+        logOut(result.user);
       })
       .catch((error) => {
         console.error(error.message);
@@ -63,15 +59,15 @@ const Register = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="flex justify-center items-center h-screen">
       <div
-        className="card p-5 shadow"
+        className="card p-5 shadow-lg bg-white rounded-lg"
         style={{ width: "400px", height: "500px" }}
       >
-        <h4>Please Register</h4>
+        <h4 className="text-xl font-bold mb-4">Please Register</h4>
         <form onSubmit={handleSubmit}>
           <input
-            className="w-100 mb-4 rounded ps-2 bg-lightblue"
+            className="w-full mb-4 rounded px-2 py-1 bg-lightblue-100"
             type="text"
             name="name"
             id="name"
@@ -80,7 +76,7 @@ const Register = () => {
           />
           <br />
           <input
-            className="w-100 mb-4 rounded ps-2 bg-lightblue"
+            className="w-full mb-4 rounded px-2 py-1 bg-lightblue-100"
             type="email"
             name="email"
             id="email"
@@ -89,7 +85,7 @@ const Register = () => {
           />
           <br />
           <input
-            className="w-100 mb-4 rounded ps-2 bg-lightblue"
+            className="w-full mb-4 rounded px-2 py-1 bg-lightblue-100"
             type="password"
             name="password"
             id="password"
@@ -98,23 +94,27 @@ const Register = () => {
           />
           <br />
           <input
-            className="w-100 mb-4 rounded ps-2 bg-lightblue"
+            className="w-full mb-4 rounded px-2 py-1 bg-lightblue-100"
             type="url"
             name="photoURL"
             id="photoURL"
             placeholder="Your Profile Picture URL"
           />
           <br />
-          <input
-            className="btn btn-primary bg-orange w-100"
+          <button
+            className="btn btn-primary bg-orange w-full py-2"
             type="submit"
-            value="Register"
-          />
+          >
+            Register
+          </button>
         </form>
         <p className="mt-3">
-          <small>
-            Already have an account? Please <Link to="/login">Login</Link>{" "}
-          </small>
+          <p>
+            Already have an account? Please{" "}
+            <Link className="text-red-600 underline font-semibold" to="/login">
+              Login
+            </Link>{" "}
+          </p>
         </p>
         <p className="text-danger">{error}</p>
         <p className="text-success">{success}</p>

@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi"; // Or any other icon library
 
+//error message for wrong route
 const NotFound = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
